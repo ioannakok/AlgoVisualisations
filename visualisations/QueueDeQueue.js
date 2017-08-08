@@ -124,7 +124,7 @@
 
     function deQueue(element, x, time, delay) {
 
-        // Element gets in the scene
+        // Element gets dequeued
         var tween = new TWEEN.Tween({x: x})
             .to({x: 150}, time)
             .delay(delay)

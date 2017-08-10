@@ -17,9 +17,9 @@
         camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 
         // position and point the camera to the center of the scene
-        camera.position.x = -25;
+        camera.position.x = 25;
         camera.position.y = 0;
-        camera.position.z = 50;
+        camera.position.z = 40;
         camera.lookAt(scene.position);
 
         // add subtle ambient lighting
@@ -43,7 +43,7 @@
 
         // Display the bars
         var dist = 5;
-        var x = -10;
+        var x = -20;
         
         // Create 8 elements that are in the stack
         for(var i = 0; i < 8; i++) {
@@ -84,7 +84,7 @@
         }
 
         // Create an element to enqueue into the queue
-        var bar = getBox(-25, 50, 0, 0xffff00);
+        var bar = getBox(-50, 50, 0, 0xffff00);
         scene.add(bar);
         bars.push(bar);
 
@@ -137,7 +137,7 @@
             })
 
         // Enqueue element
-        var tween2 = new TWEEN.Tween({x: -25, y: 0})
+        var tween2 = new TWEEN.Tween({x: -50, y: 0})
             .to({x: x, y: y})
             .easing(TWEEN.Easing.Elastic.InOut)
             .onUpdate(function() {

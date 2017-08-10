@@ -84,7 +84,7 @@
         }
 
         
-        // This animation was an idea seen here: https://gist.github.com/toto-castaldi/269b4f3b515355f8e2ef
+        // Idea and code seen here: https://gist.github.com/toto-castaldi/269b4f3b515355f8e2ef
         var peek = function () {
             return new TWEEN.Tween({
             scale: 1

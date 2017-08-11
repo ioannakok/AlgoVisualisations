@@ -5,7 +5,7 @@
     var linesX = [];
     var camera, renderer;
     var time = 3000;
-    var delay = 2000;
+    var delay = 0;
     var scene;
 
     // once everything is loaded, we run our Three.js stuff.
@@ -69,13 +69,24 @@
             scene.add(line);
         }
         
-        // Remove element from the head of the list
-        remove(boxes[0], xCoords[0], 0, lines[0], linesX[0], 0, linesX[1], 0, time, delay);
+        /* Remove element from the head of th list */
 
-        delay += time;
-        // Remove element from the tail of the list
-        remove(boxes[boxes.length - 1], xCoords[xCoords.length - 1], 0, lines[lines.length - 1], 
-            linesX[linesX.length - 2], 0, linesX[linesX.length - 1], 0, time, delay);
+        // Rotate pointer
+        var tween1 = new TWEEN.Tween({x: lines[0].geometry.vertices[1].x, y: lines[0].geometry.vertices[1].y})
+            .to({x: lines[0].geometry.vertices[1].x - 2, y: lines[0].geometry.vertices[1].y + 2}, time)
+            .onUpdate(function() {
+                lines[0].geometry.vertices[1].x = this.x;
+                lines[0].geometry.vertices[1].y = this.y;
+                lines[0].geometry.verticesNeedUpdate = true; 
+            })
+            .start();
+
+        delay += time * 2;
+
+        // Send element and pointer out of scene
+        var x2 = linesX[1] + 2;
+        remove(boxes[0], xCoords[0], 0, lines[0], linesX[0], 0, x2, 0, time, delay);
+
 
         // Print for debugging
         boxes.forEach(function(box) {
@@ -159,52 +170,6 @@
 
     }
 
-    // Swap elements
-    function insert(element, x, y, lineX1, lineX2, lineY, time, delay) {
-
-        var position = {x: -65, y: 10, rotation: 0};
-
-        var tween = new TWEEN.Tween(position)
-            .to({x: x, y: y, rotation: 0.1}, time)
-            .delay(delay)
-            .easing(TWEEN.Easing.Elastic.InOut)
-            .onUpdate(function() {
-                element.position.x = this.x;
-                element.position.y = this.y;
-                element.rotation.z -= this.rotation;
-
-                
-                
-            })
-            
-        var tween2 = new TWEEN.Tween({x: x, y: y, rotation: 0.1})
-            .to({x: x, y: y, rotation: 0}, 1000)
-            .easing(TWEEN.Easing.Elastic.InOut)
-            .onUpdate(function() {
-                element.rotation.z = this.rotation;
-                var line = getLine(lineX1, lineX2, lineY);
-                scene.add(line);
-                
-            })
-           
-        tween.chain(tween2);
-        tween.start();    
-  
-    }
-
-    // Shift elements
-    function shift(element, x1, y1, x2, y2, time, delay) {
-
-        var tween = new TWEEN.Tween({x: x1, y: y1})
-            .to({x: x2, y: y2}, time)
-            .delay(delay)
-            .onUpdate(function() {
-                element.position.x = this.x;
-                element.position.y = this.y;
-            })
-            .easing(TWEEN.Easing.Quartic.In)
-            .start(); 
-    }
     
 
     // Create one bar
